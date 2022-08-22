@@ -110,11 +110,11 @@ opinionated.
 The packages I examined include, but are not limited to:
 
 - [`grkamil/laravel-telegram-logging`](https://github.com/grkamil/laravel-telegram-logging)
-- [`jacklul/monolog-telegram](https://github.com/jacklul/monolog-telegram)
-- [`kgatan/monolog-telegram](https://github.com/kagatan/monolog-telegram)
+- [`jacklul/monolog-telegram`](https://github.com/jacklul/monolog-telegram)
+- [`kgatan/monolog-telegram`](https://github.com/kagatan/monolog-telegram)
 - [`nechaienko/laravel-telegram-logging`](https://github.com/nechaienko/laravel-telegram-logging)
 - [`rafaellaurindo/laravel-telegram-logging`](https://github.com/rafaellaurindo/laravel-telegram-logging)
-- [`scary-layer/laravel-telegram-logging](https://github.com/scary-layer/laravel-telegram-logging)
+- [`scary-layer/laravel-telegram-logging`](https://github.com/scary-layer/laravel-telegram-logging)
 - [`thanhtaivtt/laravel-telegram-logger`](https://github.com/thanhtaivtt/laravel-telegram-logger)
 
 ## Copyright
