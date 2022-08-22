@@ -18,9 +18,11 @@ outputs two or three rows, depending on if context is provided as the second inp
 Running the command `Log::warning('User failed password check.', ['user' => $user->id])` would result in
 the following message being sent to Telegram:
 
-> ⚡️ WARNING - 2022-08-22 00:06:20 - 1.1.9
-> User failed password check.
-> {"user":718}
+```
+⚡️ WARNING - 2022-08-22 00:06:20 - 1.1.9
+User failed password check.
+{"user":718}
+```
 
 ## Installation
 
