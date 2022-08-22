@@ -1,0 +1,18 @@
+{
+    "name": "tankertrackers/laravel-telegram-bot-logger",
+    "description": "An easy-to-use wrapper around Telegram, allowing you to use it as a Log channel in Laravel.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "TankerTrackers\\LaravelTelegramBotLogger\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Breki Tomasson",
+            "email": "breki@tankertrackers.com"
+        }
+    ],
+    "require": {}
+}
