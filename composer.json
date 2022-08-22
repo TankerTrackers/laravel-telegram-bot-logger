@@ -14,5 +14,9 @@
             "email": "breki@tankertrackers.com"
         }
     ],
-    "require": {}
+    "require": {
+        "monolog/monolog": "~2.0",
+        "guzzlehttp/guzzle": "^7.4.5",
+        "illuminate/support": "^9"
+    }
 }
