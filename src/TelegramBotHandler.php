@@ -11,38 +11,38 @@ use GuzzleHttp\Exception\GuzzleException;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 
-class TelegramBotHandler extends AbstractProcessingHandler
+final class TelegramBotHandler extends AbstractProcessingHandler
 {
-    protected string $channel;
-
-    protected string $token;
-
     private string $botApi = 'https://api.telegram.org/bot';
 
-    public function __construct(string $token, string $channel, $level = Logger::INFO)
+    /**
+     * @todo Make the $format user-customizable.
+     */
+    public function __construct(
+        protected string $token,
+        protected string $channel,
+        protected        $level = Logger::INFO
+    )
     {
-        $this->token = $token;
-        $this->channel = $channel;
-
         $format = "%message%\n%context% %extra%";
 
         $formatter = new TelegramBotFormatter(true, $format);
 
         $this->setFormatter($formatter);
 
-        parent::__construct($level);
+        parent::__construct($this->level);
     }
 
     public function sendMessage($message) : array
     {
         if (! empty($this->token) && ! empty($this->channel)) {
             try {
-                $client = new Client(['base_uri' => $this->botApi . $this->token . '/']);
+                $client = new Client([
+                    'base_uri' => $this->botApi . $this->token . '/',
+                ]);
 
                 $client->post('sendMessage', [
-                    'headers' => [
-                        'Accept' => 'application/json',
-                    ],
+                    'headers' => ['Accept' => 'application/json'],
                     'form_params' => [
                         'chat_id' => $this->channel,
                         'text' => $message,
@@ -50,25 +50,24 @@ class TelegramBotHandler extends AbstractProcessingHandler
                     ],
                 ]);
 
-                return [
-                    'ok' => true,
-                    'message' => 'Message sent.',
-                ];
+                return $this->response(true, 'Message sent!');
             } catch (Exception|GuzzleException|ClientException $exception) {
-                return [
-                    'ok' => false,
-                    'message' => $exception->getMessage(),
-                ];
+                return $this->response(false, $exception->getMessage());
             }
         } else {
-            return [
-                'ok' => false,
-                'message' => 'Token or Chat Id missing.',
-            ];
+            return $this->response(false, 'Unknown error. Token or chat ID likely missing or invalid.');
         }
     }
 
-    protected function makePrefix($record) : string
+    protected function response(bool $ok, string $message) : array
+    {
+        return [
+            'ok' => $ok,
+            'message' => $message
+        ];
+    }
+
+    protected function makeLogLevelPrefix($record) : string
     {
         $emoji_list = [
             Logger::DEBUG => '🚧',
@@ -78,18 +77,25 @@ class TelegramBotHandler extends AbstractProcessingHandler
             Logger::ERROR => '🚨',
             Logger::CRITICAL => '🤒',
             Logger::ALERT => '👀',
-            Logger::EMERGENCY => '🤕',
+            Logger::EMERGENCY => '❌❌❌',
         ];
 
         return $emoji_list[$record['level']] . ' ' . $record['level_name'];
     }
 
+    /**
+     * @todo Allow for more user configuration here.
+     *
+     * @todo The now() should be replaced with a more elegant handling of the $record['datetime'], but since it uses a
+     *       custom \Monolog\DateTimeImmutable model, this felt like the easiest way to get things up and running for
+     *       now.
+     */
     protected function write(array $record) : void
     {
         $this->sendMessage(
             sprintf(
                 '<b>%s - %s - %s</b>%s%s',
-                $this->makePrefix($record),
+                $this->makeLogLevelPrefix($record),
                 now()->toDateTimeString(),
                 config('app.version'),
                 PHP_EOL,

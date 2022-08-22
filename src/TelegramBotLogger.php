@@ -6,16 +6,16 @@ namespace TankerTrackers\LaravelTelegramBotLogger;
 
 use Monolog\Logger;
 
-class TelegramBotLogger
+final class TelegramBotLogger
 {
     public function __invoke(array $config) : Logger
     {
-        // In production environments, show only log messages of level INFO and greater.
-        // @todo extract this to a configuration setting instead.
-        $level = $config['level'];
+        $handler = new TelegramBotHandler(
+            token: $config['token'],
+            channel: $config['channel'],
+            level: $config['level'] ?? Logger::INFO
+        );
 
-        $handler = new TelegramBotHandler($config['token'], $config['channel'], $level);
-
-        return new Logger('log', [$handler]);
+        return new Logger('telegram', [$handler]);
     }
 }
