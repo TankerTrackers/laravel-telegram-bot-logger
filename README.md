@@ -74,7 +74,7 @@ If the `level` key is not provided, it will default to `INFO` and higher.
   ],
 ```
 
-Once that is done, you can add `telegram` as a channel in your output stack at the top of `app/logging.php`:
+Once that is done, you can add `telegram` as a channel in your output stack at the top of `config/logging.php`:
 
 ```php
   'stack' => [
