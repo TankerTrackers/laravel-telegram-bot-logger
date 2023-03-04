@@ -6,6 +6,7 @@ namespace TankerTrackers\LaravelTelegramBotLogger;
 
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
+use Monolog\LogRecord;
 
 final class TelegramBotFormatter implements FormatterInterface
 {
@@ -21,7 +22,7 @@ final class TelegramBotFormatter implements FormatterInterface
         //
     }
 
-    public function format(array $record) : string
+    public function format(LogRecord $record) : string
     {
         $message = $this->format;
 
