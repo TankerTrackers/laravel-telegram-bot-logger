@@ -9,22 +9,22 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Monolog\Handler\AbstractProcessingHandler;
+use Monolog\Level;
 use Monolog\Logger;
 
 final class TelegramBotHandler extends AbstractProcessingHandler
 {
     private string $botApi = 'https://api.telegram.org/bot';
 
-    /**
-     * @todo Make the $format user-customizable.
-     */
+    /** @todo Make the $format user-customizable. */
     public function __construct(
         protected string $token,
         protected string $channel,
-        protected        $level = Logger::INFO
+        protected Level $level = Level::Info
     )
     {
         $format = "%message%\n%context% %extra%";
+
 
         $formatter = new TelegramBotFormatter(true, $format);
 
