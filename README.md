@@ -1,6 +1,6 @@
 # laravel-telegram-bot-logger
 
-> **Note** This was built under Laravel 9.x using PHP 8.1, so it has been locked to require at least those
+> **Note** This was built under Laravel 10.x using PHP 8.1, so it has been locked to require at least those
 > versions as I cannot guarantee functionality in previous versions of Laravel and/or PHP.
 
 An easy-to-use wrapper around Telegram, allowing you to use it as a Monolog output channel in your Laravel
@@ -58,11 +58,11 @@ command, and it will return to you your user's `id` value (under the key `messag
 Getting the `id` for a Telegram chat channel seems to change every so often, so I recommend you Google for various
 solutions to this, as any suggestion given here might no longer be valid in a few weeks' time.
 
-Then, include the following in your `config/logging.php`. Note that this will output messages of level `DEBUG` and
-higher to Telegram when you are running your application in a non-production environment, but only `INFO` and
+Then, include the following in your `config/logging.php`. Note that this will output messages of level `debug` and
+higher to Telegram when you are running your application in a non-production environment, but only `info` and
 higher when running in production. You are free to change these settings as you see fit, of course.
 
-If the `level` key is not provided, it will default to `INFO` and higher.
+If the `level` key is not provided, it will default to `info` and higher.
 
 ```php
   'telegram' => [
@@ -70,7 +70,7 @@ If the `level` key is not provided, it will default to `INFO` and higher.
       'via' => \TankerTrackers\LaravelTelegramBotLogger\TelegramBotLogger::class,
       'token' => env('TELEGRAM_BOT_TOKEN'),
       'channel' => env('TELEGRAM_CHANNEL'),
-      'level' => env('APP_ENV') === 'production' ? \Monolog\Logger::INFO : \Monolog\Logger::DEBUG,
+      'level' => env('APP_ENV') === 'production' ? \Monolog\Level:Info : \Monolog\Level::Debug,
   ],
 ```
 
@@ -96,8 +96,6 @@ Development of this library is ongoing. Future versions will contain things like
 - Add support for logging stacktraces in some way that doesn't look terrible.
 - Allowing for easier setup of multiple outputs.
   - For example: Debug-messages **only** are sent to one channel, with everything else going to another channel.
-- Verify compatibility for Laravel versions before 9.x.
-- Verify compatibility for PHP versions before 8.1.
 
 ## Credits
 
