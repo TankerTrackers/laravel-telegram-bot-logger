@@ -11,6 +11,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Level;
 use Monolog\Logger;
+use Monolog\LogRecord;
 
 final class TelegramBotHandler extends AbstractProcessingHandler
 {
@@ -90,7 +91,7 @@ final class TelegramBotHandler extends AbstractProcessingHandler
      *       custom \Monolog\DateTimeImmutable model, this felt like the easiest way to get things up and running for
      *       now.
      */
-    protected function write(array $record) : void
+    protected function write(LogRecord $record) : void
     {
         $this->sendMessage(
             sprintf(
